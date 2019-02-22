@@ -1,6 +1,6 @@
 {
   "name": "sample4",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "electron-updater example project test",
   "author": "vijay <vijay@mymail.com>",
   "main": "main.js",
