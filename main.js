@@ -2,31 +2,42 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const {app, BrowserWindow, Menu, protocol, ipcMain} = electron;
+const {app, BrowserWindow, Menu, protocol, Notification, ipcMain} = electron;
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 
 autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = 'info';
+
 log.info('App starting...');
+log.info(autoUpdater.logger.transports.file.level);
+autoUpdater.logger.transports.file.level = 'info';
 
 
 // SET ENV
-process.env.NODE_ENV = 'production';
+//process.env.NODE_ENV = 'production';
 
 let mainWindow;
 let addWindow;
 
+function sendStatusToWindow(text) {
+  log.info(text);
+  mainWindow.webContents.send('message', text);
+}
+
 autoUpdater.on('checking-for-update', () => {
+  console.log('Checking for update...');
   sendStatusToWindow('Checking for update...');
 })
 autoUpdater.on('update-available', (info) => {
+  console.log('Update available.');
   sendStatusToWindow('Update available.');
 })
 autoUpdater.on('update-not-available', (info) => {
+  console.log('Update not available.');
   sendStatusToWindow('Update not available.');
 })
 autoUpdater.on('error', (err) => {
+  console.log('Error in auto-updater. ' + err);
   sendStatusToWindow('Error in auto-updater. ' + err);
 })
 autoUpdater.on('download-progress', (progressObj) => {
@@ -36,6 +47,7 @@ autoUpdater.on('download-progress', (progressObj) => {
   sendStatusToWindow(log_message);
 })
 autoUpdater.on('update-downloaded', (info) => {
+  console.log('Update downloaded');
   sendStatusToWindow('Update downloaded');
 });
 
@@ -52,6 +64,7 @@ app.on('ready', function(){
     protocol: 'file:',
     slashes: true
   }));
+  mainWindow.openDevTools();
 
   // Quit app when closed
   mainWindow.on('closed', function(){
@@ -147,6 +160,8 @@ if(process.env.NODE_ENV !== 'production'){
 }
 
 app.on('ready', function()  {
-  autoUpdater.checkForUpdatesAndNotify();
-});
+  //autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdates();
+  //console.log("check for update");
 
+});

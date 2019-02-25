@@ -1,22 +1,22 @@
 {
   "name": "sample4",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "electron-updater example project test",
   "author": "vijay <vijay@mymail.com>",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "publish": "build -p always"
-  },  
+  },
   "license": "ISC",
-  "dependencies": {    
+  "dependencies": {
     "electron-log": "^3.0.1",
     "electron-updater": "^4.0.6"
   },
   "devDependencies": {
     "electron": "^4.0.5",
     "electron-builder": "^20.38.5",
-    "electron-packager": "^13.0.1"
+    "electron-updater": "^4.0.6"
   },
   "build": {
     "appId": "com.github.vijayjohn.testep",
